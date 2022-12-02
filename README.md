@@ -1,6 +1,6 @@
 # quiz-codeigniter
 
-hmvc->application->application->modules->quiz
+hmvc->application->modules->quiz
 
 Game = localhost/hmvc/quiz
 
