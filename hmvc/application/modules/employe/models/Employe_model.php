@@ -18,7 +18,7 @@ class Employe_model extends CI_Model{
 
     function executeEmployeData(){
         $query=$this->db->post('EMPLOYE');
-        $return_result=$this->db->query($sql)->result();
+        $return_result=$this->db->query($query)->result();
 
         // $return_data=$this->db->select('*')->from('EMPLOYE')->get()->result();
         return $return_result;

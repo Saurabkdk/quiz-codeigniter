@@ -147,4 +147,15 @@ class Quiz_model extends CI_Model
 
     }
 
+    function addDivs($divs){
+        $divAdd = false;
+        foreach ($divs as $div){
+            $divAdd = $this->db->set('id', $div[0])
+                               ->set('Name', $div[1])
+                               ->set('Address', $div[2])
+                               ->insert('divs');
+        }
+        return $divAdd;
+    }
+
 }

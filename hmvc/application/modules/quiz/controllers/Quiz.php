@@ -291,4 +291,27 @@ class Quiz extends MX_Controller
         }
     }
 
+    function divs(){
+        if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest'){
+            $values = $this->input->post('values');
+
+            $addDiv = $this->quiz_model->addDivs($values);
+
+            $status = false;
+
+            if($addDiv){
+                $status = true;
+            }
+
+            echo json_encode(
+                array(
+                    'status' => $status
+                )
+            );
+        }
+        else{
+            $this->load->view('divs');
+        }
+    }
+
 }
