@@ -14,6 +14,28 @@ $(function () {
         $(`#${elementId}`).append(option);
     }
 
+    function createPatientRow(patient){
+        let row = '<tbody>';
+        $.each(patient, (key, patient) => {
+            row += '<tr class="' + patient.id +'">';
+            row += '<td>' + (key + 1) +'</td>';
+            row += '<td>' + (patient.id) +'</td>';
+            row += '<td>' + (patient.name) +'</td>';
+            row += '<td>' + (patient.age) +' / ' + patient.gender + '</td>';
+            row += '<td>' + (patient.province) +'</td>';
+            row += '<td>' + (patient.address) +'</td>';
+            row += '<td>' + (patient.date) +'</td>';
+            row += '<td>\n' +
+                '<a href="' + path + '/patient/aboutPatient?id=' + patient.id + '"><button type="button" class="button-3" role="button">Preview</button></a>\n' +
+                '&nbsp\n' +
+                '<a href="'+ path +'/patient/billing?id=' + patient.id + '"><button class="button-3" role="button">Reg & Billing</button></a>\n' +
+                '</td>';
+            row += '</tr>';
+        })
+        row += '</tbody>';
+        $('table').append(row);
+    }
+
     function ajaxGetSelect(elementId, id, parent){
         let checkId = id;
         if (elementId == 'province' && (countryId > 0 || provinceId > 0)) {
@@ -63,12 +85,12 @@ $(function () {
 
     })
 
-    function ajaxCall(type, url, patientData){
+    function ajaxCall(type, url, patientData, patientName){
         $.ajax({
             type: type,
             url: url,
             dataType: 'json',
-            data: {'patient' : patientData},
+            data: {'patient' : patientData, 'patientName' : patientName},
             success: (data) => {
                 if (type == 'POST') {
                     if (data.message != undefined) {
@@ -82,6 +104,10 @@ $(function () {
                     $.each(data.patients, (key, patient) => {
                         patients.push(patient.name);
                     })
+                    if (patientName){
+                        $('#allPatients').hide();
+                        createPatientRow(data.patients);
+                    }
                 }
             }
         })
@@ -139,54 +165,6 @@ $(function () {
     }
 
     $('#addPatientBtn').click(() => {
-        // let name = $('#name').val();
-        // let age = $('#age').val();
-        // let gender;
-        //
-        // let genderElement = document.getElementsByName('gender');
-        //
-        // for (let i = 0; i < genderElement.length; i++) {
-        //     if (genderElement[i].checked){
-        //         gender = genderElement[i].value;
-        //     }
-        // }
-        //
-        // let language = [];
-        //
-        // let languageElement = document.getElementsByName('language');
-        //
-        // for (let i = 0; i < languageElement.length; i++) {
-        //     if (languageElement[i].checked){
-        //         language.push(languageElement[i].value);
-        //     }
-        // }
-        //
-        // let pid = 0;
-        //
-        // if (document.getElementById('id') != null){
-        //     pid = $('#id').val();
-        // }
-        //
-        // let country = $("#country :selected").val();
-        // let province = $('#province :selected').text();
-        // let municipality = $('#municipality :selected').text();
-        // let address = $('#address').val();
-        // let phone = $('#phone').val();
-        //
-        // let date = new Date().toLocaleString();
-        //
-        // let patientData = [name, age, gender, language, country, province, municipality, address, phone, date, pid];
-        //
-        // // {'name' : name, 'age' : age, 'gender' : gender,
-        // //     'language' : language[0], 'lang' : language, 'country' : country, 'province' : province, 'municipality' : municipality,
-        // //     'address' : address, 'phone' : phone, 'date' : date}
-        //
-        // if (pid > 0){
-        //     ajaxCall('POST', path + '/addPatient', patientData);
-        // }
-        // else {
-        //     ajaxCall('POST', path + '/addPatient', patientData);
-        // }
 
         savePatient();
 
@@ -219,6 +197,13 @@ $(function () {
 
     $('#cancelDetail').click(() => {
         window.location.replace(path + '/addPatient');
+    })
+
+    $('#search').click(() => {
+        if (($('#searchInp').val()).length > 0){
+            let searchName = $('#searchInp').val();
+            ajaxCall('GET', path + '/addPatient', [], searchName);
+        }
     })
 
 });

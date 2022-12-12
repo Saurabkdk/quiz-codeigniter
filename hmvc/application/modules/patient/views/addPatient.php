@@ -34,7 +34,7 @@
     </tr>
     </thead>
 
-    <tbody>
+    <tbody id="allPatients">
     <?php foreach ($list as $key => $patient) { ?>
         <tr class="<?=$patient->id ?>">
             <td><?=$key + 1; ?></td>
@@ -44,7 +44,11 @@
             <td><?=$patient->province ?></td>
             <td><?=$patient->address ?></td>
             <td><?=$patient->date ?></td>
-            <td><a href="<?= base_url(); ?>patient/aboutPatient?id=<?=$patient->id?>"><button type="button" class="button-3" role="button">Preview</button></a>&nbsp<a href="<?= base_url(); ?>patient/billing?id=<?=$patient->id ?>"><button class="button-3" role="button">Reg & Billing</button></a></td>
+            <td>
+                <a href="<?= base_url(); ?>patient/aboutPatient?id=<?=$patient->id?>"><button type="button" class="button-3" role="button">Preview</button></a>
+                &nbsp
+                <a href="<?= base_url(); ?>patient/billing?id=<?=$patient->id ?>"><button class="button-3" role="button">Reg & Billing</button></a>
+            </td>
         </tr>
     <?php } ?>
     </tbody>

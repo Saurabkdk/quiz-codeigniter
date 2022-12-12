@@ -10,6 +10,7 @@ class Patient_model extends CI_Model
         $this->db = $this->load->database('default', true);
     }
 
+    //function to get data from table
     function getData($table, $value, $order){
         if (count($value) > 0){
             $this->db->where($value);
@@ -20,10 +21,12 @@ class Patient_model extends CI_Model
         return $this->db->get($table)->result();
     }
 
+    //function to add data into table
     function addPatient($table, $data){
         return $addPatient = $this->db->insert($table, $data);
     }
 
+    //function to update data in tables
     function updatePatient($table, $data, $id){
         $this->db->where('id', $id);
         return $this->db->update($table, $data);

@@ -19,12 +19,12 @@ $(function () {
     let btnId = '0';
     let bill = 0;
 
-    function ajaxCall(type, url, dat, table, id, calculations) {
+    function ajaxCall(type, url, dat, table, id, billDate, calculations) {
         $.ajax({
             type: type,
             url: url,
             dataType: 'json',
-            data: {'data1': dat[0], 'data2': dat[1], 'table': table, 'id': id},
+            data: {'data1': dat[0], 'data2': dat[1], 'table': table, 'id': id, 'billDate' : billDate},
             success: (response) => {
                 if (type == 'POST') {
                     console.log(response.status);
@@ -292,8 +292,9 @@ $(function () {
             let id = e.target.id;
             btnId = id;
             bill = document.getElementById(id).parentElement.parentElement.id;
+            let billDate = document.getElementById(id).parentElement.parentElement.className;
 
-            ajaxCall('GET', path + '/tests', [], [], bill);
+            ajaxCall('GET', path + '/tests', [], [], bill, billDate);
 
             $('#tests').show();
             $('#billList').hide();

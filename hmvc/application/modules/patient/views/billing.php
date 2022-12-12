@@ -132,7 +132,7 @@
         </thead>
         <tbody>
         <?php foreach ($bills as $key => $bill) { ?>
-        <tr id="<?=$bill->id ?>">
+        <tr id="<?=$bill->id ?>" class="<?=$bill->billing_date?>">
             <td><?=$bill->patient_id ?></td>
             <td><?=$bill->id ?></td>
             <td><?=$bill->billing_date ?></td>
@@ -142,7 +142,7 @@
             <td><?=$bill->nettotal ?></td>
             <td>
                 <button type="button" id="view<?=$key + 1 ?>" class="button-3" role="button">View</button>
-                <a href="<?= base_url(); ?>patient/billing?billId=<?=$bill->id ?>"><button type="button" id="editBill" class="button-3 edit" role="button">Edit</button></a>
+                <a href="<?= base_url(); ?>patient/billing?billId=<?=$bill->id ?>&billDate=<?=$bill->billing_date?>"><button type="button" id="editBill" class="button-3 edit" role="button">Edit</button></a>
             </td>
         </tr>
         <?php } ?>
